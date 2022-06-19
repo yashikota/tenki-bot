@@ -4,27 +4,22 @@ import os
 import tweepy
 
 
-def auth():
-    auth = tweepy.OAuthHandler(
-        os.environ["CONSUMER_KEY"], os.environ["CONSUMER_SECRET"]
-    )
-    auth.set_access_token(os.environ["ACCESS_TOKEN"], os.environ["ACCESS_TOKEN_SECRET"])
+class Twitter:
+    def __init__(self):
+        self.token: tweepy = None
+        self.text: tweepy = None
 
-    return auth
+    def auth(self) -> None:
+        self.token.set_access_token(os.environ["AT"], os.environ["AS"])
+        self.token = tweepy.OAuthHandler(os.environ["CK"], os.environ["CS"])
+        self.api: tweepy = tweepy.API(self.token)
 
+    def gen_text(self) -> None:
+        self.text = "{}月{}日の天気は{}です。".format(
+            datetime.datetime.now().month,
+            datetime.datetime.now().day,
+            "晴れ",
+        )
 
-def gen_text() -> str:
-    text = "{}月{}日の天気は{}です。".format(
-        datetime.datetime.now().month,
-        datetime.datetime.now().day,
-        "晴れ",
-    )
-
-    return text
-
-
-def tweet(img_path: str):
-    api: tweepy.OAuthHandler = tweepy.API(auth())
-    text: str = gen_text()
-
-    api.update_with_media(img_path, text)
+    def tweet(self, img_path: str) -> None:
+        self.api.update_with_media(img_path, self.text)
