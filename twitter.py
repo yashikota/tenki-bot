@@ -7,12 +7,13 @@ import tweepy
 class Twitter:
     def __init__(self):
         self.token: tweepy = None
+        self.api: tweepy = None
         self.text: tweepy = None
 
     def auth(self) -> None:
         self.token.set_access_token(os.environ["AT"], os.environ["AS"])
         self.token = tweepy.OAuthHandler(os.environ["CK"], os.environ["CS"])
-        self.api: tweepy = tweepy.API(self.token)
+        self.api = tweepy.API(self.token)
 
     def gen_text(self) -> None:
         self.text = "{}月{}日の天気は{}です。".format(
