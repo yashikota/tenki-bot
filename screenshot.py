@@ -6,7 +6,9 @@ from playwright.sync_api import Playwright, sync_playwright
 
 class Screenshot:
     def __init__(self) -> None:
-        self.url: str = "https://google.com"
+        self.url: str = (
+            "https://www.data.jma.go.jp/multi/yoho/yoho_detail.html?code=270000&lang=jp"
+        )
         self.date: str = datetime.datetime.now(
             datetime.timezone(datetime.timedelta(hours=9), "JST")
         ).strftime("%Y_%m_%d_%H_%M_%S")
@@ -39,7 +41,7 @@ class Screenshot:
         browser.close()
         context.close()
 
-    def main(self) -> None:
+    def main(self) -> str:
         self.check_dir()
         self.playwright_main()
 
